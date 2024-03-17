@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AppBar, Button, Box, Typography, styled, Input } from "@mui/material";
+import { createTask } from "../services/api";
 
 const Navbar = styled(AppBar)`
   border: 1px solid rgb(59 74 89 / 30%);
@@ -58,14 +59,19 @@ export default function AddTask() {
   const [newDeadline, setNewDeadline] = useState("");
   console.log(newTask);
 
-  const addTask = ()=> {
+  const addTask = async()=> {
     if (!newTask || !newStatus || !newDeadline) { 
       alert("All fields must be filled out."); 
       return; 
     } 
 
-    
+    const data = {
+      task: newTask,
+      status: newStatus,
+      deadline: newDeadline
+    }
 
+    await createTask(data);
   }
 
   return (
@@ -98,7 +104,7 @@ export default function AddTask() {
             Deadline
           </Typography>
           <Inp
-            type="date"
+            type="datetime-local"
             sx={{ color: "#ffffff" }}
             placeholder="Enter Task"
             variant="none"
