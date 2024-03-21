@@ -16,6 +16,13 @@ export const getTask = async() => {
         console.log("Error while calling getTask api", error.message);
     }
 }
+export const updateTask = async(id) => {
+    try {
+        return await axios.get(`${URL}/updatetask/${id}`);
+    } catch (error) {
+        console.log("Error while calling getTask api", error.message);
+    }
+}
 export const deleteTask = async(id) => {
     try {
         await axios.delete(`${URL}/deletetask/` + id);

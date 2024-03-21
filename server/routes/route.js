@@ -7,7 +7,6 @@ router.use(express.json());
 router.post('/addtask', async(req, res)=>{
     try {
         const data = req.body;
-        console.log(data)
         const newTask = new Todo(data);
         await newTask.save();
 
@@ -38,6 +37,21 @@ router.delete('/deletetask/:id', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+router.post('/updatetask/:id', async(req, res)=>{
+    const id = req.params.id;
+    try {
+        const updateData = { 
+            task: req.body.task, 
+            status: req.body.status, 
+            deadline: req.body.deadline,  
+        }
+        const data = await Todo.findByIdAndUpdate(id, updateData);
+        res.status(200).json({ message: data});
+    } catch (error) {
+        res.status(500).json({ message: error.message});
+    }
+})
 
 
 export default router;

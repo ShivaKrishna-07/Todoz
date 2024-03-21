@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -17,14 +18,22 @@ const Container = styled(Box)`
 
 const TableBox = styled(Table)`
   background: #0c0e10;
-  
+  border: 1px solid rgb(121, 121, 120);
+  border-radius: 8px;
 `
 
 const Cell = styled(TableCell)`
   color: #dfdfdf;
 `
 
+const ButtonBox = styled(Box)`
+  text-align: center;
+  padding: 20px;
+`
+
 export default function Todo() {
+
+  const navigate = useNavigate();
 
   const [task, setTask] = useState([])
 
@@ -35,12 +44,15 @@ export default function Todo() {
   const getTodoData = async() => {
     let response = await getTask();
     setTask(response.data.message);
-    console.log(task);
   }
 
   const deleteOneTask = async(id) => {
     await deleteTask(id);
     getTodoData();
+  }
+
+  const editTask = (id) => {
+    navigate(`/edit/${id}`);
   }
 
   return (
@@ -65,9 +77,9 @@ export default function Todo() {
               <Cell  >{task.status}</Cell>
               <Cell  >{task.task}</Cell>
               <Cell  >{task.task}</Cell>
-              <Cell  >{task.deadline}</Cell>
+              <Cell  >{task.deadline ? new Date(task.deadline).toLocaleString(): ''}</Cell>
               <Cell  >
-                <Button style={{marginRight: 10}} variant="contained" color="success">Edit</Button>
+                <Button style={{marginRight: 10}} onClick={() => editTask(task._id)} variant="contained" color="success">Edit</Button>
                 <Button variant="contained" onClick={() => deleteOneTask(task._id)} color="error">Delete</Button>
               </Cell>
             </TableRow> 
@@ -76,6 +88,9 @@ export default function Todo() {
         </TableBody>
       </TableBox>
     </TableContainer>
+    <ButtonBox >
+      <Button onClick={() => navigate("/")} variant="contained" color="success">Add Task</Button>
+    </ButtonBox>
     </Container>
   );
 }

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppBar, Button, Box, Typography, styled, Input } from "@mui/material";
-import { createTask } from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { updateTask } from "../services/api";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Navbar = styled(AppBar)`
   border: 1px solid rgb(59 74 89 / 30%);
@@ -57,33 +57,24 @@ const Submit = styled(Button)`
 export default function AddTask() {
 
   const navigate = useNavigate();
+
+  const {id} = useParams();
   
+  const [task, setTask] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [newStatus, setNewStatus] = useState("");
   const [newDeadline, setNewDeadline] = useState("");
-  console.log(newTask);
 
-  const addTask = async()=> {
-    if (!newTask || !newStatus || !newDeadline) { 
-      alert("All fields must be filled out."); 
-      return; 
-    } 
+  useEffect(()=>{
+    updateTodoData();
+  }, [])
 
-    const data = {
-      task: newTask,
-      status: newStatus,
-      deadline: newDeadline
-    }
-
-    await createTask(data);
-
-    setNewTask('');
-    setNewStatus('');
-    setNewDeadline('');
-    navigate("/tasks")
-    window.location.reload(); 
+  const updateTodoData = async() => {
+    let response = await updateTask(id);
+    setTask(response.data.message);
+    console.log(task);
   }
-
+  
   return (
     <Box>
       <Navbar position="static">
@@ -100,7 +91,7 @@ export default function AddTask() {
             }}
             level="h1"
           >
-            Add Task
+            Edit Task
           </Typography>
           <Typography style={{ fontWeight: "500", fontSize: 20 }}>
             Task
@@ -109,7 +100,7 @@ export default function AddTask() {
           <Typography style={{ fontWeight: "500", fontSize: 20 }}>
             Status
           </Typography>
-          <Inp placeholder="Enter Status" variant="none" onChange={(e) => setNewStatus(e.target.value)} />
+          <Inp placeholder="Enter Status" variant="none" value={task.status} onChange={(e) => setNewStatus(e.target.value)} />
           <Typography style={{ fontWeight: "500", fontSize: 20 }}>
             Deadline
           </Typography>
@@ -120,7 +111,7 @@ export default function AddTask() {
             variant="none"
             onChange={(e) => setNewDeadline(e.target.value)}
           />
-          <Submit onClick={addTask} variant="outlined">Add Task</Submit>
+          <Submit variant="outlined">Add Task</Submit>
         </InputBox>
       </Body>
     </Box>
