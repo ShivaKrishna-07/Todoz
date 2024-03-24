@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { deleteTask, getTask } from '../services/api';
-import { styled, Box, Button } from '@mui/material';
+import { styled, Box, Button, Typography } from '@mui/material';
 
 const Container = styled(Box)`
   padding: 80px 50px;
@@ -62,21 +62,19 @@ export default function Todo() {
         <TableHead >
           <TableRow>
             <Cell >Task</Cell>
+            <Cell >Status</Cell>
             <Cell >Deadline</Cell>
-            <Cell >Status</Cell>
-            <Cell >Status</Cell>
             <Cell >Actions</Cell>
           </TableRow>
         </TableHead>
         <TableBody>
-          { task && task.map((task) => (
+          { task ? (task.map((task) => (
             <TableRow
-              key={task.id}
+              key={task._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
+              <Cell  >{task.task}</Cell>
               <Cell  >{task.status}</Cell>
-              <Cell  >{task.task}</Cell>
-              <Cell  >{task.task}</Cell>
               <Cell  >{task.deadline ? new Date(task.deadline).toLocaleString(): ''}</Cell>
               <Cell  >
                 <Button style={{marginRight: 10}} onClick={() => editTask(task._id)} variant="contained" color="success">Edit</Button>
@@ -84,6 +82,9 @@ export default function Todo() {
               </Cell>
             </TableRow> 
           ))
+          )
+          :
+          <Typography style={{color: '878787'}}>Please add your tasks</Typography>
         }
         </TableBody>
       </TableBox>

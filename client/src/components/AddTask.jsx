@@ -61,7 +61,6 @@ export default function AddTask() {
   const [newTask, setNewTask] = useState("");
   const [newStatus, setNewStatus] = useState("");
   const [newDeadline, setNewDeadline] = useState("");
-  console.log(newTask);
 
   const addTask = async()=> {
     if (!newTask || !newStatus || !newDeadline) { 

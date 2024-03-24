@@ -24,6 +24,30 @@ router.get('/gettask', async(req, res)=>{
         res.status(500).json({message: error.message})
     }
 })
+
+router.get('/:id', async(req, res)=>{
+    const id = req.params.id;
+
+    try {
+        const data = await Todo.findById({_id: id});
+        res.status(200).json({message: data});
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
+router.post('/updatetask/:id', async (req, res) => {
+    const task = req.body;
+    const id = req.params.id;
+    try {
+        const data = await Todo.findByIdAndUpdate(id, task, {new: true});
+        console.log(data);
+        res.status(200).json({message: data});
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
 router.delete('/deletetask/:id', async (req, res) => {
     const taskId = req.params.id;
 
@@ -38,20 +62,7 @@ router.delete('/deletetask/:id', async (req, res) => {
     }
 });
 
-router.post('/updatetask/:id', async(req, res)=>{
-    const id = req.params.id;
-    try {
-        const updateData = { 
-            task: req.body.task, 
-            status: req.body.status, 
-            deadline: req.body.deadline,  
-        }
-        const data = await Todo.findByIdAndUpdate(id, updateData);
-        res.status(200).json({ message: data});
-    } catch (error) {
-        res.status(500).json({ message: error.message});
-    }
-})
+
 
 
 export default router;
