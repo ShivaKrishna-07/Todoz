@@ -1,5 +1,5 @@
 {
-    "buidl":[
+    "build":[
         {
             "src": "server.js",
             "use": "@vercel/node"
