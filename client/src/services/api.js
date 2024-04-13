@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = "http://localhost:8000";
+const URL = import.meta.env.VITE_BASE_URL;
 export const createTask = async(data) => {
     try {
         return await axios.post(`${URL}/addtask`, data);
