@@ -1,21 +1,9 @@
 import { useState } from "react";
-import { AppBar, Button, Box, Typography, styled, Input } from "@mui/material";
+import { Button, Box, Typography, styled, Input } from "@mui/material";
 import { createTask } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
-const Navbar = styled(AppBar)`
-  border: 1px solid rgb(59 74 89 / 30%);
-  height: 80px;
-  background: rgb(39 39 39);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const Title = styled(Typography)`
-  font-size: 40px;
-
-  font-weight: bold;
-`;
 
 const Body = styled(Box)`
   height: 86.6vh;
@@ -52,6 +40,7 @@ const Submit = styled(Button)`
   border: 1px solid #2f8d46;
   margin: auto;
   float: right;
+  margin-left: 10px;
 `;
 
 export default function AddTask() {
@@ -85,9 +74,7 @@ export default function AddTask() {
 
   return (
     <Box>
-      <Navbar position="static">
-        <Title>To Do List</Title>
-      </Navbar>
+      <Navbar/>
       <Body>
         <InputBox>
           <Typography
@@ -119,7 +106,9 @@ export default function AddTask() {
             variant="none"
             onChange={(e) => setNewDeadline(e.target.value)}
           />
-          <Submit onClick={addTask} variant="outlined">Add Task</Submit>
+          
+          <Submit onClick={addTask} variant="primary">Add Task</Submit>
+          <Submit onClick={()=> navigate('/tasks')} variant="primary">View Tasks</Submit>
         </InputBox>
       </Body>
     </Box>

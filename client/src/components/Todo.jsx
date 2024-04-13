@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { deleteTask, getTask } from '../services/api';
 import { styled, Box, Button, Typography } from '@mui/material';
+import Navbar from './Navbar';
 
 const Container = styled(Box)`
   padding: 80px 50px;
@@ -56,6 +57,8 @@ export default function Todo() {
   }
 
   return (
+    <>
+    <Navbar/>
     <Container>
     <TableContainer component={Paper}>
       <TableBox sx={{ minWidth: 650 }} aria-label="simple table">
@@ -93,5 +96,6 @@ export default function Todo() {
       <Button onClick={() => navigate("/")} variant="contained" color="success">Add Task</Button>
     </ButtonBox>
     </Container>
+    </>
   );
 }

@@ -1,21 +1,8 @@
 import { useEffect, useState } from "react";
-import { AppBar, Button, Box, Typography, styled, Input } from "@mui/material";
+import { Button, Box, Typography, styled, Input } from "@mui/material";
 import { getOneTask, updateTask } from "../services/api";
 import { useNavigate, useParams } from "react-router-dom";
-
-const Navbar = styled(AppBar)`
-  border: 1px solid rgb(59 74 89 / 30%);
-  height: 80px;
-  background: rgb(39 39 39);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const Title = styled(Typography)`
-  font-size: 40px;
-
-  font-weight: bold;
-`;
+import Navbar from "./Navbar";
 
 const Body = styled(Box)`
   height: 86.6vh;
@@ -102,9 +89,7 @@ export default function AddTask() {
 
   return (
     <Box>
-      <Navbar position="static">
-        <Title>To Do List</Title>
-      </Navbar>
+      <Navbar/>
       <Body>
         <InputBox>
           <Typography
