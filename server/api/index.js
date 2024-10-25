@@ -20,8 +20,6 @@ app.use('/', Router);
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
-console.log("DB_USERNAME:", USERNAME);
-console.log("DB_PASSWORD:", PASSWORD);
 
 Connection(USERNAME, PASSWORD);
 
