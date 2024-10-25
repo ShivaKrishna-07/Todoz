@@ -1,7 +1,6 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import path from 'path'
 import { Connection } from './database/db.js';
 import Router from './routes/route.js';
     
@@ -12,6 +11,10 @@ const PORT = 8000;
 dotenv.config();
 
 app.use(cors());
+
+app.get('/', (req, res)=>{
+    res.send("Home page")
+})
 
 app.use('/', Router);
 
